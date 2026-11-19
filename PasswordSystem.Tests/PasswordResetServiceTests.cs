@@ -8,8 +8,9 @@ public class PasswordResetServiceTests
         // Arrange
         var fakeEmailProvider = new FakeEmailProvider();
         var fakeTokenGenerator = new FakeTokenGenerator();
-        var sut = new PasswordResetService(fakeEmailProvider, fakeTokenGenerator);
-        var testEmail = "test@test.com";
+        var fakeUserRepository = new FakeUserRepository();
+        var sut = new PasswordResetService(fakeEmailProvider, fakeTokenGenerator, fakeUserRepository);
+        var testEmail = "test1@test.com";
 
         // Act
         sut.SendResetEmail(testEmail);
