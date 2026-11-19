@@ -1,25 +1,20 @@
-using PasswordSystem;
+namespace PasswordSystem;
 
-public class UserRepository(IUserRepository emailIsRegistered, IUserRepository addUser)
+public class UserRepository : IUserRepository
 {
-    private readonly IUserRepository _EmailIsRegistered = emailIsRegistered;
-    private readonly IUserRepository _Adduser = addUser;
-    string[] userEmail = ["a@mail.se", "b@mail.se", "c@mail.se", "d@mail.se", "e@mail.se", "f@mail.se", "g@mail.se", "h@mail.se", "i@mail.se"];
+    private readonly List<string> _userEmails = ["a@mail.se", "b@mail.se", "c@mail.se", "d@mail.se", "e@mail.se", "f@mail.se", "g@mail.se", "h@mail.se", "i@mail.se"];
 
-    private bool EmailIsRegistered(string email)
+    public bool EmailIsRegistered(string email)
     {
-        if (userEmail.Contains(email))
+        return _userEmails.Contains(email);
+    }
+
+    public void AddUser(string email, string password)
+    {
+        if (EmailIsRegistered(email))
         {
-            return true;
+            throw new Exception("Email already exists");
         }
-
-        return false;
-
+        _userEmails.Add(email);
     }
-    private static void AddUser(string email, string password)
-    {
-
-    }
-
-
 }
