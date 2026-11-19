@@ -1,12 +1,10 @@
 namespace PasswordSystem.Tests;
 
-public class UserRepository(IUserRepository emailIsRegistered, IUserRepository addUser)
+public class FakeUserRepository : IUserRepository
 {
-    private readonly IUserRepository _EmailIsRegistered = emailIsRegistered;
-    private readonly IUserRepository _Adduser = addUser;
-    string[] userEmail = ["a@mail.se", "b@mail.se", "c@mail.se", "d@mail.se", "e@mail.se", "f@mail.se", "g@mail.se", "h@mail.se", "i@mail.se"];
+    List<string> userEmail = ["fakemail@.se"];
 
-    private bool EmailIsRegistered(string email)
+    public bool EmailIsRegistered(string email)
     {
         if (userEmail.Contains(email))
         {
@@ -16,10 +14,15 @@ public class UserRepository(IUserRepository emailIsRegistered, IUserRepository a
         return false;
 
     }
-    private static void AddUser(string email, string password)
+    public void AddUser(string email, string password)
     {
-
+        if (EmailIsRegistered(email))
+        {
+            throw new Exception("Email already exists");
+        }
+        userEmail.Add(email);
     }
 
 
 }
+
