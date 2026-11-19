@@ -1,15 +1,21 @@
 namespace PasswordSystem;
 
-public class PasswordResetService(IEmailProvider emailProvider, ITokenGenerator tokenGenerator)
+public class PasswordResetService(IEmailProvider emailProvider, ITokenGenerator tokenGenerator, IUserRepository userRepository)
 {
     private readonly IEmailProvider _emailProvider = emailProvider;
     private readonly ITokenGenerator _tokenGenerator = tokenGenerator;
+    private readonly IUserRepository _userRepository = userRepository;
 
     public void SendResetEmail(string email)
     {
         string subject = "Password Reset Requested";
         string token = _tokenGenerator.Generate();
         string body = CreateEmailBody(token);
+        bool isEmailRegistered = _userRepository.EmailIsRegistered(email);
+        if (isEmailRegistered)
+        {
+            throw new Exception("Email is already used");
+        }
         _emailProvider.SendEmail(email, subject, body);
     }
 
