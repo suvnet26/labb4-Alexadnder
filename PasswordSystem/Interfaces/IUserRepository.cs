@@ -2,6 +2,6 @@ namespace PasswordSystem;
 
 public interface IUserRepository
 {
-    public bool EmailIsRegistered();
-    public void AddUser(string email, string password);
+    bool EmailIsRegistered(string email);
+    void AddUser(string email, string password);
 }
