@@ -7,13 +7,13 @@ public class UserServiceTests
     {
         // Arrange
         var fakeRepo = new FakeUserRepository();
-        var sut = new UserService(fakeRepo); // "sut" stands for System Under Test
-        var emailToCheck = "test@example.com";
+        var sut = new UserService(fakeRepo);
+        var emailToCheck = "fakemail@.se";
 
         // Act
         var result = sut.EmailIsRegistered(emailToCheck);
 
         // Assert
-        Assert.False(result);
+        Assert.True(result);
     }
 }
