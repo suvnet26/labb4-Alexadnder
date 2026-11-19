@@ -1,13 +1,19 @@
 namespace PasswordSystem.Tests;
 
-public class EmailIsRegistered
+public class UserServiceTests
 {
     [Fact]
-    public void CheckIfEmailISTaken()
+    public void EmailIsRegistered_WhenEmailDoesNotExist_ReturnsFalse()
     {
-        var expected = false;
-        FakeUserRepository f = new();
-        var actual = f.EmailIsRegistered("a@.se");
-        Assert.Equal(expected, actual);
+        // Arrange
+        var fakeRepo = new FakeUserRepository();
+        var sut = new UserService(fakeRepo); // "sut" stands for System Under Test
+        var emailToCheck = "test@example.com";
+
+        // Act
+        var result = sut.EmailIsRegistered(emailToCheck);
+
+        // Assert
+        Assert.False(result);
     }
 }
